@@ -1,10 +1,12 @@
 package com.cacatrampo.dto;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.beans.BeanUtils;
 
+import com.cacatrampo.entities.CandidatoEntity;
 import com.cacatrampo.entities.VagaEntity;
 
 
@@ -13,13 +15,14 @@ public class VagaDTO {
 	
 	private Long id;
 	private String titulo;
-	private Date dataPostagem;
+	private LocalDate dataPostagem;
 	private Double salario;
 	private String tipoContratacao;
 	private String modeloTrabalho;
 	private String local;
 	private String nomeEmpresa;
-	private String descricaoVaga;	
+	private String descricaoVaga;
+	private List<CandidatoEntity> candidatos;
 
 
 	public VagaDTO(VagaEntity vaga) {
@@ -44,11 +47,11 @@ public class VagaDTO {
 		this.titulo = titulo;
 	}
 
-	public Date getDataPostagem() {
+	public LocalDate getDataPostagem() {
 		return dataPostagem;
 	}
 
-	public void setDataPostagem(Date dataPostagem) {
+	public void setDataPostagem(LocalDate dataPostagem) {
 		this.dataPostagem = dataPostagem;
 	}
 
@@ -98,6 +101,15 @@ public class VagaDTO {
 
 	public void setDescricaoVaga(String descricaoVaga) {
 		this.descricaoVaga = descricaoVaga;
+	}
+	
+	
+	public List<CandidatoEntity> getCandidatos() {
+		return candidatos;
+	}
+
+	public void setCandidatos(List<CandidatoEntity> candidatos) {
+		this.candidatos = candidatos;
 	}
 
 	@Override

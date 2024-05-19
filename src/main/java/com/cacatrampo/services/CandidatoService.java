@@ -7,14 +7,20 @@ import org.springframework.stereotype.Service;
 
 import com.cacatrampo.dto.CandidatoDTO;
 import com.cacatrampo.entities.CandidatoEntity;
+import com.cacatrampo.entities.VagaEntity;
 import com.cacatrampo.repositories.CandidatoRepository;
+import com.cacatrampo.repositories.VagaRepository;
 
 @Service
 public class CandidatoService {
 
 	@Autowired
 	private CandidatoRepository candidatoRepository;
-
+	@Autowired
+	private VagaRepository vagaRepository;
+	@Autowired
+	private VagaService vagaService;
+	
 	public List<CandidatoDTO> listarCandidatos() {
 		List<CandidatoEntity> listaCandidatos = candidatoRepository.findAll();
 		return listaCandidatos.stream().map(CandidatoDTO::new).toList();
@@ -38,5 +44,16 @@ public class CandidatoService {
 	public CandidatoDTO buscarPorID(Long id) {
 		return new CandidatoDTO(candidatoRepository.findById(id).get());		
 	}
+	
+	public CandidatoDTO enviarCurriculo(Long idVaga, Long idCandidato) {
+		VagaEntity vaga = new VagaEntity(vagaService.buscarVagaPorID(idVaga));
+		CandidatoEntity candidato = new CandidatoEntity(buscarPorID(idCandidato));
+		candidato.getVagas().add(vaga);
+		vagaRepository.save(vaga);	
+		candidatoRepository.save(candidato);	
+		return new CandidatoDTO(candidato);
+	}
+	
+	
 
 }

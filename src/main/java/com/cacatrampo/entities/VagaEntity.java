@@ -1,17 +1,20 @@
 package com.cacatrampo.entities;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.beans.BeanUtils;
 
 import com.cacatrampo.dto.VagaDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -24,7 +27,7 @@ public class VagaEntity {
 	@Column(nullable=false)
 	private String titulo;
 	@Column(nullable=false,name="data_postagem")
-	private Date dataPostagem;
+	private LocalDate dataPostagem;
 	@Column(nullable=false)
 	private Double salario;
 	@Column(nullable=false,name="tipo_contratacao")
@@ -37,6 +40,10 @@ public class VagaEntity {
 	private String nomeEmpresa;
 	@Column(nullable=false,name="descricao_vaga")
 	private String descricaoVaga;
+	
+	@JsonIgnore
+	@ManyToMany(mappedBy = "vagas")
+	private List<CandidatoEntity> candidatos;
 	
 	public VagaEntity(VagaDTO vaga) {
 		BeanUtils.copyProperties(vaga, this);
@@ -60,11 +67,11 @@ public class VagaEntity {
 		this.titulo = titulo;
 	}
 
-	public Date getDataPostagem() {
+	public LocalDate getDataPostagem() {
 		return dataPostagem;
 	}
 
-	public void setDataPostagem(Date dataPostagem) {
+	public void setDataPostagem(LocalDate dataPostagem) {
 		this.dataPostagem = dataPostagem;
 	}
 
@@ -114,6 +121,15 @@ public class VagaEntity {
 
 	public void setDescricaoVaga(String descricaoVaga) {
 		this.descricaoVaga = descricaoVaga;
+	}
+	
+	
+	public List<CandidatoEntity> getCandidatos() {
+		return candidatos;
+	}
+
+	public void setCandidatos(List<CandidatoEntity> candidatos) {
+		this.candidatos = candidatos;
 	}
 
 	@Override

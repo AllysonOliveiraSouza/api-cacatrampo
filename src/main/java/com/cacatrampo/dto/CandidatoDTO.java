@@ -1,10 +1,12 @@
 package com.cacatrampo.dto;
 
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.beans.BeanUtils;
 
 import com.cacatrampo.entities.CandidatoEntity;
+import com.cacatrampo.entities.VagaEntity;
 
 public class CandidatoDTO {
 
@@ -12,6 +14,7 @@ public class CandidatoDTO {
 	private String nome;
 	private String login;
 	private String senha;
+	private List<VagaEntity> vagas;
 	
 	public CandidatoDTO(CandidatoEntity candidato) {
 		BeanUtils.copyProperties(candidato, this);
@@ -49,6 +52,14 @@ public class CandidatoDTO {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+	
+	public List<VagaEntity> getVagas() {
+		return vagas;
+	}
+
+	public void setVagas(List<VagaEntity> vagas) {
+		this.vagas = vagas;
 	}
 
 	@Override

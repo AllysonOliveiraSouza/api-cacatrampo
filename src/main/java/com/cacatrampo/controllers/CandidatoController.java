@@ -41,5 +41,15 @@ public class CandidatoController {
 		return ResponseEntity.ok().build();
 		
 	}
+	@GetMapping("/{id}")
+	public CandidatoDTO buscarPorId(@PathVariable Long id) {
+		return candidatoService.buscarPorID(id);		
+	}
+	
+	@PutMapping(value="/{idVaga}/{idCandidato}")
+	public CandidatoDTO enviarCurriculo(@PathVariable(value="idVaga")Long idVaga, 
+			@PathVariable(value="idCandidato")Long idCandidato){
+		return candidatoService.enviarCurriculo(idVaga, idCandidato);		
+	}
 
 }

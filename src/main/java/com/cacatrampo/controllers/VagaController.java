@@ -40,5 +40,10 @@ public class VagaController {
 		vagaService.excluirVaga(id);
 		return ResponseEntity.ok().build();		
 	}
+	
+	@GetMapping("{id}")
+	public VagaDTO buscarPorId(@PathVariable Long id) {
+		return vagaService.buscarVagaPorID(id);
+	}
 
 }

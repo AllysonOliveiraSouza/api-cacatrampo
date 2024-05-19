@@ -1,16 +1,21 @@
 package com.cacatrampo.entities;
 
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.beans.BeanUtils;
 
 import com.cacatrampo.dto.CandidatoDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -26,7 +31,12 @@ public class CandidatoEntity {
 	private String login;
 	@Column(nullable = false)
 	private String senha;
-	
+	@JsonIgnore
+	@ManyToMany
+	@JoinTable(name="candidatos_vagas", joinColumns = @JoinColumn(name="candidato_id"),
+	inverseJoinColumns = @JoinColumn(name="vaga_id"))
+	private List<VagaEntity> vagas;
+
 	public CandidatoEntity(CandidatoDTO candidato) {
 		BeanUtils.copyProperties(candidato, this);
 	}
@@ -64,6 +74,14 @@ public class CandidatoEntity {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+	
+	public List<VagaEntity> getVagas() {
+		return vagas;
+	}
+
+	public void setVagas(List<VagaEntity> vagas) {
+		this.vagas = vagas;
 	}
 
 	@Override
