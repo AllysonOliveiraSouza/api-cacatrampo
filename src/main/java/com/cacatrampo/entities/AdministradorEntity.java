@@ -1,30 +1,45 @@
-package com.cacatrampo.dto;
+package com.cacatrampo.entities;
 
 import java.util.List;
 import java.util.Objects;
 
 import org.springframework.beans.BeanUtils;
 
-import com.cacatrampo.entities.CandidatoEntity;
-import com.cacatrampo.entities.CurriculoEntity;
-import com.cacatrampo.entities.VagaEntity;
+import com.cacatrampo.dto.AdministradorDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-public class CandidatoDTO {
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
+@Table(name="Administrador")
+@Entity
+public class AdministradorEntity {
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+	@Column(nullable=false)
 	private String nome;
+	@Column(nullable=false)
 	private String email;
+	@Column(nullable=false)
 	private String senha;
-	private String matricula;
-	private String telContato;
-	private CurriculoEntity curriculo;
-	private List<VagaEntity> vagas;
-
-	public CandidatoDTO() {}
-
-	public CandidatoDTO(CandidatoEntity candidato) {
-		BeanUtils.copyProperties(candidato, this);
+	@JsonIgnore
+	@OneToMany(mappedBy="administrador")
+	private List<VagaEntity>vagas;
+	
+	public AdministradorEntity(AdministradorDTO administradorDTO) {
+		BeanUtils.copyProperties(administradorDTO, this);
 	}
+	
+	public AdministradorEntity() {
+	}
+	
 
 	public Long getId() {
 		return id;
@@ -57,31 +72,8 @@ public class CandidatoDTO {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-
-	public String getMatricula() {
-		return matricula;
-	}
-
-	public void setMatricula(String matricula) {
-		this.matricula = matricula;
-	}
-
-	public String getTelContato() {
-		return telContato;
-	}
-
-	public void setTelContato(String telContato) {
-		this.telContato = telContato;
-	}
-
-	public CurriculoEntity getCurriculo() {
-		return curriculo;
-	}
-
-	public void setCurriculo(CurriculoEntity curriculo) {
-		this.curriculo = curriculo;
-	}
-
+	
+	
 	public List<VagaEntity> getVagas() {
 		return vagas;
 	}
@@ -103,8 +95,9 @@ public class CandidatoDTO {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		CandidatoDTO other = (CandidatoDTO) obj;
+		AdministradorEntity other = (AdministradorEntity) obj;
 		return Objects.equals(id, other.id);
 	}
-
+	
+	
 }

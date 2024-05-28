@@ -14,7 +14,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -40,16 +42,19 @@ public class VagaEntity {
 	private String nomeEmpresa;
 	@Column(nullable=false,name="descricao_vaga")
 	private String descricaoVaga;
-	
+	@ManyToOne
+	@JoinColumn(name="administrador_id")
+	private AdministradorEntity administrador;
+
 	@JsonIgnore
 	@ManyToMany(mappedBy = "vagas")
 	private List<CandidatoEntity> candidatos;
 	
+	public VagaEntity() {}
+	
 	public VagaEntity(VagaDTO vaga) {
 		BeanUtils.copyProperties(vaga, this);
 	}
-	
-	public VagaEntity() {}
 
 	public Long getId() {
 		return id;
@@ -123,7 +128,15 @@ public class VagaEntity {
 		this.descricaoVaga = descricaoVaga;
 	}
 	
-	
+		
+	public AdministradorEntity getAdministrador() {
+		return administrador;
+	}
+
+	public void setAdministrador(AdministradorEntity administrador) {
+		this.administrador = administrador;
+	}
+
 	public List<CandidatoEntity> getCandidatos() {
 		return candidatos;
 	}

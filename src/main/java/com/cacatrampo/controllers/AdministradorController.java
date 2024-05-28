@@ -3,7 +3,6 @@ package com.cacatrampo.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,39 +12,33 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cacatrampo.dto.VagaDTO;
-import com.cacatrampo.services.VagaService;
+import com.cacatrampo.dto.AdministradorDTO;
+import com.cacatrampo.services.AdministradorService;
 
 @RestController
-@RequestMapping(value="/vagas")
-public class VagaController {
-	
+@RequestMapping("/adms")
+public class AdministradorController {
 	@Autowired
-	private VagaService vagaService;
+	private AdministradorService admService;
 	@GetMapping
-	public List<VagaDTO> listarVagas(){
-		return vagaService.listarVagas();
+	public List<AdministradorDTO> listarAdms(){
+		return admService.listarAdms();
 	}
-
 	@PostMapping
-	public void adicionarVaga(@RequestBody VagaDTO vaga) {
-		vagaService.adicionarVaga(vaga);
+	public void adicionarAdm(@RequestBody AdministradorDTO adm) {
+		admService.adicionarAdm(adm);
 	}
-
 	@PutMapping
-	public VagaDTO alterarVaga(@RequestBody VagaDTO vaga) {
-		return vagaService.alterarVaga(vaga);
+	public AdministradorDTO alterarDadosAdm(@RequestBody AdministradorDTO adm) {
+		return admService.alterarDadosAdm(adm);
 	}
-
 	@DeleteMapping("{id}")
-	public ResponseEntity<Void> excluirVaga(@PathVariable("id")Long id){
-		vagaService.excluirVaga(id);
-		return ResponseEntity.ok().build();		
+	public void excluirAdm(@PathVariable Long id) {
+		admService.excluirAdm(id);
 	}
-
 	@GetMapping("{id}")
-	public VagaDTO buscarPorId(@PathVariable Long id) {
-		return vagaService.buscarVagaPorID(id);
+	public AdministradorDTO buscarPorID(@PathVariable Long id) {
+		return admService.buscarPorID(id);
 	}
 
 }

@@ -16,6 +16,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -28,21 +29,37 @@ public class CandidatoEntity {
 	@Column(nullable = false)
 	private String nome;
 	@Column(nullable = false)
-	private String login;
+	private String email;
 	@Column(nullable = false)
-	private String senha;
+	private String senha;	
+	@Column(name="matricula_ra",nullable=false)
+	private String matricula;
+	@Column(name="tel_contato",nullable=false)
+	private String telContato;
+	@JsonIgnore
+	@OneToOne(mappedBy="candidato")
+	private CurriculoEntity curriculo;
 	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name="candidatos_vagas", joinColumns = @JoinColumn(name="candidato_id"),
 	inverseJoinColumns = @JoinColumn(name="vaga_id"))
 	private List<VagaEntity> vagas;
+	
+	public CandidatoEntity() {
+	}
 
 	public CandidatoEntity(CandidatoDTO candidato) {
 		BeanUtils.copyProperties(candidato, this);
 	}
 	
-	public CandidatoEntity() {
+	public CurriculoEntity getCurriculo() {
+		return curriculo;
 	}
+
+	public void setCurriculo(CurriculoEntity curriculo) {
+		this.curriculo = curriculo;
+	}
+
 
 	public Long getId() {
 		return id;
@@ -60,12 +77,12 @@ public class CandidatoEntity {
 		this.nome = nome;
 	}
 
-	public String getLogin() {
-		return login;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setLogin(String login) {
-		this.login = login;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getSenha() {
@@ -75,7 +92,23 @@ public class CandidatoEntity {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-	
+		
+	public String getMatricula() {
+		return matricula;
+	}
+
+	public void setMatricula(String matricula) {
+		this.matricula = matricula;
+	}
+
+	public String getTelContato() {
+		return telContato;
+	}
+
+	public void setTelContato(String telContato) {
+		this.telContato = telContato;
+	}
+
 	public List<VagaEntity> getVagas() {
 		return vagas;
 	}

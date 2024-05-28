@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import org.springframework.beans.BeanUtils;
 
+import com.cacatrampo.entities.AdministradorEntity;
 import com.cacatrampo.entities.CandidatoEntity;
 import com.cacatrampo.entities.VagaEntity;
 
@@ -22,14 +23,14 @@ public class VagaDTO {
 	private String local;
 	private String nomeEmpresa;
 	private String descricaoVaga;
+	private AdministradorEntity administrador;
 	private List<CandidatoEntity> candidatos;
-
-
+	
+	public VagaDTO() {}
+	
 	public VagaDTO(VagaEntity vaga) {
 		BeanUtils.copyProperties(vaga, this);
 	}
-	
-	public VagaDTO() {}
 
 	public Long getId() {
 		return id;
@@ -101,9 +102,16 @@ public class VagaDTO {
 
 	public void setDescricaoVaga(String descricaoVaga) {
 		this.descricaoVaga = descricaoVaga;
+	}	
+	
+	public AdministradorEntity getAdministrador() {
+		return administrador;
 	}
-	
-	
+
+	public void setAdministrador(AdministradorEntity administrador) {
+		this.administrador = administrador;
+	}
+
 	public List<CandidatoEntity> getCandidatos() {
 		return candidatos;
 	}

@@ -42,8 +42,25 @@ public class CandidatoService {
 	}
 	
 	public CandidatoDTO buscarPorID(Long id) {
-		return new CandidatoDTO(candidatoRepository.findById(id).get());		
+		return new CandidatoDTO(candidatoRepository.findById(id).get());
 	}
+	
+	public Boolean validarLogin(String email) {	
+
+		try {
+		 CandidatoDTO candidato = new CandidatoDTO(candidatoRepository.findByEmail(email));
+		 if(candidato.getEmail().contentEquals(email)){
+			 return true;
+		 }
+		}catch(Exception e) {
+			System.out.println("Login não encontrado !");
+		}
+		return false;
+	}
+	
+
+	
+	
 	
 	public CandidatoDTO enviarCurriculo(Long idVaga, Long idCandidato) {
 		VagaEntity vaga = new VagaEntity(vagaService.buscarVagaPorID(idVaga));
@@ -54,6 +71,15 @@ public class CandidatoService {
 		return new CandidatoDTO(candidato);
 	}
 	
-	
+	public CandidatoDTO logar(String email, String senha){	
+		
+		Boolean loginExiste = validarLogin(email);
+		if(loginExiste) {
+			 return new CandidatoDTO(candidatoRepository.findByEmail(email));
+		}else {
+			return new CandidatoDTO();
+		}
+		
+	}	
 
 }
