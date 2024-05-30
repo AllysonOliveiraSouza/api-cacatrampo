@@ -7,28 +7,24 @@ import org.springframework.stereotype.Service;
 
 import com.cacatrampo.dto.CandidatoDTO;
 import com.cacatrampo.entities.CandidatoEntity;
-import com.cacatrampo.entities.VagaEntity;
 import com.cacatrampo.repositories.CandidatoRepository;
-import com.cacatrampo.repositories.VagaRepository;
 
 @Service
 public class CandidatoService {
 
 	@Autowired
 	private CandidatoRepository candidatoRepository;
-	@Autowired
-	private VagaRepository vagaRepository;
-	@Autowired
-	private VagaService vagaService;
 	
 	public List<CandidatoDTO> listarCandidatos() {
 		List<CandidatoEntity> listaCandidatos = candidatoRepository.findAll();
 		return listaCandidatos.stream().map(CandidatoDTO::new).toList();
 	}
 
-	public void adicionarCandidato(CandidatoDTO candidato) {
+	public Long adicionarCandidato(CandidatoDTO candidato) {
 		CandidatoEntity candidatoEntity = new CandidatoEntity(candidato);
-		candidatoRepository.save(candidatoEntity);
+		CandidatoDTO candidatoCadastrado = 
+				new CandidatoDTO(candidatoRepository.save(candidatoEntity));
+		return candidatoCadastrado.getId();		
 	}
 
 	public CandidatoDTO alterarCandidato(CandidatoDTO candidato) {
@@ -45,41 +41,31 @@ public class CandidatoService {
 		return new CandidatoDTO(candidatoRepository.findById(id).get());
 	}
 	
-	public Boolean validarLogin(String email) {	
-
+	public CandidatoDTO logar(CandidatoDTO candidato) {
 		try {
-		 CandidatoDTO candidato = new CandidatoDTO(candidatoRepository.findByEmail(email));
-		 if(candidato.getEmail().contentEquals(email)){
-			 return true;
-		 }
+			CandidatoDTO candidatoLogin = new CandidatoDTO
+				(candidatoRepository.findByEmail(candidato.getEmail()));		
+		if((candidato.getSenha().contentEquals(candidatoLogin.getSenha()))) {
+			return candidatoLogin;
+		}		
 		}catch(Exception e) {
-			System.out.println("Login não encontrado !");
+			System.out.println("Login não localizado ! "+e.getMessage());
 		}
-		return false;
+		return new CandidatoDTO();
 	}
 	
 
 	
 	
 	
-	public CandidatoDTO enviarCurriculo(Long idVaga, Long idCandidato) {
-		VagaEntity vaga = new VagaEntity(vagaService.buscarVagaPorID(idVaga));
-		CandidatoEntity candidato = new CandidatoEntity(buscarPorID(idCandidato));
-		candidato.getVagas().add(vaga);
-		vagaRepository.save(vaga);	
-		candidatoRepository.save(candidato);	
-		return new CandidatoDTO(candidato);
-	}
+
 	
-	public CandidatoDTO logar(String email, String senha){	
-		
-		Boolean loginExiste = validarLogin(email);
-		if(loginExiste) {
-			 return new CandidatoDTO(candidatoRepository.findByEmail(email));
-		}else {
-			return new CandidatoDTO();
-		}
-		
-	}	
+
+	
+	
+	
+
+	
+
 
 }

@@ -28,8 +28,8 @@ public class CandidatoController {
 		return candidatoService.listarCandidatos();
 	}
 	@PostMapping
-	public void adicionarCandidato(@RequestBody CandidatoDTO candidato) {
-		candidatoService.adicionarCandidato(candidato);
+	public Long adicionarCandidato(@RequestBody CandidatoDTO candidato) {
+		return candidatoService.adicionarCandidato(candidato);
 	}
 	@PutMapping
 	public CandidatoDTO alterarCandidato(@RequestBody CandidatoDTO candidato) {
@@ -43,22 +43,10 @@ public class CandidatoController {
 	@GetMapping("/{id}")
 	public CandidatoDTO buscarPorId(@PathVariable Long id) {
 		return candidatoService.buscarPorID(id);		
-	}		
-	@GetMapping("login/{login}")
-	public Boolean buscarPorLogin(@PathVariable String login) {
-		return candidatoService.validarLogin(login);		
-	}		
-
-	@PutMapping(value="/{idVaga}/{idCandidato}")
-	public CandidatoDTO enviarCurriculo(@PathVariable(value="idVaga")Long idVaga, 
-			@PathVariable(value="idCandidato")Long idCandidato){
-		return candidatoService.enviarCurriculo(idVaga, idCandidato);		
 	}
-	
-	@GetMapping("logar/{login}/{senha}")
-	public CandidatoDTO logar(@PathVariable(value="login")
-	String login,@PathVariable(value="senha")String senha){
-		return candidatoService.logar(login, senha);		
-	}
+	@PostMapping("/login")
+	public CandidatoDTO logar(@RequestBody CandidatoDTO candidato) {
+		return candidatoService.logar(candidato);
+	}	
 	
 }

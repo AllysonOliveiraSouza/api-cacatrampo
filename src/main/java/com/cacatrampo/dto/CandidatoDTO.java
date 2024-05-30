@@ -89,6 +89,14 @@ public class CandidatoDTO {
 	public void setVagas(List<VagaEntity> vagas) {
 		this.vagas = vagas;
 	}
+	
+	
+
+	@Override
+	public String toString() {
+		return "CandidatoDTO [id=" + id + ", nome=" + nome + ", email=" + email + ", senha=" + senha + ", matricula="
+				+ matricula + ", telContato=" + telContato + ", curriculo=" + curriculo + ", vagas=" + vagas + "]";
+	}
 
 	@Override
 	public int hashCode() {
