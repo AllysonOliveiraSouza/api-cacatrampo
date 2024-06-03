@@ -45,5 +45,10 @@ public class CurriculoController {
 	public CurriculoDTO buscarPorID(@PathVariable Long id) {
 		return curriculoService.buscarPorID(id);
 	}
+	
+	@GetMapping("/candidato/{idCandidato}")
+	public CurriculoDTO buscarPorIdCandidato(@PathVariable Long idCandidato) {
+	return curriculoService.buscarPorIdCandidato(idCandidato);
+	}
 
 }

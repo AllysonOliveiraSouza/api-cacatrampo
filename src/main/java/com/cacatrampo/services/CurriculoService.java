@@ -9,10 +9,16 @@ import com.cacatrampo.dto.CurriculoDTO;
 import com.cacatrampo.entities.CurriculoEntity;
 import com.cacatrampo.repositories.CurriculoRepository;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+
 @Service
 public class CurriculoService {
 	@Autowired
 	private CurriculoRepository curriculoRepository;
+	
+	@PersistenceContext
+	private EntityManager em;
 	
 	public List<CurriculoDTO> listarCurriculos(){
 		List<CurriculoEntity> listaCurriculos = curriculoRepository.findAll();		
@@ -37,6 +43,15 @@ public class CurriculoService {
 	public CurriculoDTO buscarPorID(Long id) {
 		return new CurriculoDTO(curriculoRepository.findById(id).get());
 	}
+	
+	
+	public CurriculoDTO buscarPorIdCandidato(Long idCandidato) {
+		CurriculoDTO curriculo = new CurriculoDTO(curriculoRepository.findByCandidatoId
+				(idCandidato));
+		return curriculo;
+	}	
+	
+	
 	
 
 }

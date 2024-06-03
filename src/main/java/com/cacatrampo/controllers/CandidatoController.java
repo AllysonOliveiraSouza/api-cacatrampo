@@ -27,23 +27,28 @@ public class CandidatoController {
 	public List<CandidatoDTO> listarCandidatos(){
 		return candidatoService.listarCandidatos();
 	}
+	
 	@PostMapping
 	public Long adicionarCandidato(@RequestBody CandidatoDTO candidato) {
 		return candidatoService.adicionarCandidato(candidato);
 	}
+	
 	@PutMapping
 	public CandidatoDTO alterarCandidato(@RequestBody CandidatoDTO candidato) {
 		return candidatoService.alterarCandidato(candidato);
 	}
+	
 	@DeleteMapping("{id}")
 	public ResponseEntity<Void> excluirCandidato(@PathVariable("id")Long id){
 		candidatoService.excluirCandidato(id);
 		return ResponseEntity.ok().build();		
 	}
+	
 	@GetMapping("/{id}")
 	public CandidatoDTO buscarPorId(@PathVariable Long id) {
 		return candidatoService.buscarPorID(id);		
 	}
+	
 	@PostMapping("/login")
 	public CandidatoDTO logar(@RequestBody CandidatoDTO candidato) {
 		return candidatoService.logar(candidato);

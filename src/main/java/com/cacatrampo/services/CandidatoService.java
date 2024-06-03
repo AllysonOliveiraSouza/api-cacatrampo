@@ -28,8 +28,25 @@ public class CandidatoService {
 	}
 
 	public CandidatoDTO alterarCandidato(CandidatoDTO candidato) {
-		CandidatoEntity candidatoEntity = new CandidatoEntity(candidato);
-		return new CandidatoDTO(candidatoRepository.save(candidatoEntity));
+		CandidatoDTO candidatoBackEnd = buscarPorID(candidato.getId());
+		CandidatoDTO candidatoFrontEnd = candidato;
+		
+		if(candidatoFrontEnd.getNome()=="")
+			candidatoFrontEnd.setNome(candidatoBackEnd.getNome());
+		if(candidatoFrontEnd.getEmail()=="")
+			candidatoFrontEnd.setEmail(candidatoBackEnd.getEmail());
+		if(candidatoFrontEnd.getSenha()=="")
+			candidatoFrontEnd.setSenha(candidatoBackEnd.getSenha());
+		if(candidatoFrontEnd.getMatricula()=="")
+			candidatoFrontEnd.setMatricula(candidatoBackEnd.getMatricula());
+		if(candidatoFrontEnd.getTelContato()=="")
+			candidatoFrontEnd.setTelContato(candidatoBackEnd.getTelContato());
+		
+		candidatoFrontEnd.setCurriculo(candidatoBackEnd.getCurriculo());
+		candidatoFrontEnd.setVagas(candidatoBackEnd.getVagas());		
+		
+		CandidatoEntity candidatoEntity = new CandidatoEntity(candidatoFrontEnd);
+	    return new CandidatoDTO(candidatoRepository.save(candidatoEntity));
 	}
 
 	public void excluirCandidato(Long id) {
