@@ -9,6 +9,7 @@ import org.springframework.beans.BeanUtils;
 import com.cacatrampo.dto.VagaDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -47,7 +48,7 @@ public class VagaEntity {
 	private AdministradorEntity administrador;
 
 	@JsonIgnore
-	@ManyToMany(mappedBy = "vagas")
+	@ManyToMany(mappedBy = "vagas", cascade = CascadeType.ALL)
 	private List<CandidatoEntity> candidatos;
 	
 	public VagaEntity() {}

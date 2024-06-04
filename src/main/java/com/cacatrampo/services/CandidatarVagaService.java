@@ -17,5 +17,11 @@ public class CandidatarVagaService {
 		entityManager.createNativeQuery("insert into candidatos_vagas "
 				+ "values("+idCandidato+","+idVaga+");").executeUpdate();
 	}
+	
+	@Transactional
+	public void LimparCandidatosVaga(Long id) {
+		String sql = "delete from candidatos_vagas where vaga_id="+id+";";
+		entityManager.createNativeQuery(sql).executeUpdate();		
+	}
 
 }
