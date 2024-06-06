@@ -3,7 +3,6 @@ package com.cacatrampo.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import com.cacatrampo.dto.VagaDTO;
@@ -12,7 +11,6 @@ import com.cacatrampo.repositories.VagaRepository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.Transactional;
 
 @Service
 public class VagaService {
@@ -21,6 +19,7 @@ public class VagaService {
 	@PersistenceContext
 	private EntityManager em;
 
+	//aoisajdoi
 	public List<VagaDTO> listarVagas() {
 		List<VagaEntity> listaVagas = vagaRepository.findAll();
 		return listaVagas.stream().map(VagaDTO::new).toList();
